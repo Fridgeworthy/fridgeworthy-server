@@ -1,0 +1,64 @@
+{
+  /**
+   * Application configuration section
+   * http://pm2.keymetrics.io/docs/usage/application-declaration/
+   */
+  "apps": [
+    {
+      "name": "parse-server",
+      "script": "index.js",
+      "watch": true,
+      "merge_logs": true,
+      "ignore_watch" : ["node_modules", "logs","tmp",".git"],
+      "env": {
+        // Mount path for the server. Defaults to /parse.
+        "PARSE_MOUNT": "/parse",
+        // (required) - The connection string for your database, i.e. mongodb://user:pass@host.com/dbname.
+        // Be sure to URL encode your password if your password has special characters.
+        "DATABASE_URI": "mongodb://localhost:27017/photogram",
+        // URL to your Parse Server (don't forget to specify http:// or https://).
+        // This URL will be used when making requests to Parse Server from Cloud Code.
+        "SERVER_URL": "http://fridgeworthy.herokuapp.com/parse",
+        //"SERVER_URL": "http://localhost:1337/parse",
+        // Your apps name. This will appear in the subject and body of the emails that are sent.
+        "APP_NAME": "Photogram",
+        // (required) - The application id to host with this server instance.
+        // You can use any arbitrary string. For migrated
+        "APP_ID": "myAppId",
+        // (required) - The master key to use for overriding ACL security.
+        // You can use any arbitrary string. Keep it secret! For migrated apps, this should match your hosted Parse app.
+        "MASTER_KEY": "myMasterKey",
+        "MASTER_REST_KEY": "myMasterRestKey",
+
+        // Files save in Folder
+        //"UPLOAD_LOCAL_PATH": "/storage",
+
+        // Parse Dashboard
+        "DASHBOARD_URL": "/dashboard",
+        "DASHBOARD_USER": "admin",
+        "DASHBOARD_PASSWORD": "admin123",
+
+
+        // (optional) - S3 for Storage Files
+        // Files are hosted via automaticamentes GridStore Adapter in MongoDB
+        // If you want to host the files on S3 fill in the form below
+//        "AWS_ACCESS_KEY_ID": "",
+//        "AWS_SECRET_ACCESS_KEY": "",
+//        "BUCKET_NAME": "",
+
+        // (optional) - MAILGUN for send Email
+//        "MAILGUN_API_KEY": "",
+//        "MAILGUN_DOMAIN": "",
+//        "MAILGUN_FROM_ADDRESS": "",
+
+        // Push Notification
+//        "PUSH": {
+//            "android": {
+//            "senderId": "",
+//            "apiKey": ""
+//          }
+//        }
+      }
+    }
+  ]
+}

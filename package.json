@@ -1,0 +1,36 @@
+{
+  "name": "PhotogramServer",
+  "version": "2.0.1",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/photogram/server"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-alpha.2",
+    "cors": "^2.8.1",
+    "ejs": "^2.5.5",
+    "express": "~4.14.x",
+    "express-ejs-layouts": "^2.2.0",
+    "jimp": "^0.2.27",
+    "kerberos": "~0.0.x",
+    "lodash": "^4.17.2",
+    "method-override": "^2.3.7",
+    "parse": "~1.9.2",
+    "parse-dashboard": "^1.0.21",
+    "parse-server": "2.2.23",
+    "parse-server-fs-adapter": "^1.0.1",
+    "parse-server-mailgun-adapter-template": "^1.1.7",
+    "parse-server-simple-mailgun-adapter": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=4.3"
+  }
+}

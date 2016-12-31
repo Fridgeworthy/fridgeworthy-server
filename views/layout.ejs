@@ -1,0 +1,17 @@
+<!doctype html><html ng-app="photogram" ng-controller="MainCtrl"><head><base href="/"><meta charset="utf-8"><title>
+        Photogram</title><meta name="description" content=""><meta name="viewport" content="width=device-width"><link
+            rel="icon" type="image/png" href="favicon.ico"><link rel="stylesheet" href="styles/vendor-361073d9fe.css"><link
+            rel="stylesheet" href="styles/app-5779f8db56.css"><script
+            src="//maps.googleapis.com/maps/api/js?libraries=visualization,places&language=en&key=AIzaSyArwmMNUF6H9Xqv4hXoexBurCcFVz89L3U">
+    </script></head><body layout="column">
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<div class="loader layout-fill ng-scope ng-isolate-scope layout-align-center-center layout-column flex ng-hide"
+     ng-show="vm.status.active" aria-hidden="true" style=""><div class="loader-inner"><md-progress-circular
+                class="md-accent md-hue-1 ng-scope md-cyan-theme" md-mode="indeterminate" aria-valuemin="0" aria-valuemax="100"
+                role="progressbar" style="transform: scale(0.5)"><div class="md-spinner-wrapper md-mode-indeterminate"><div
+                        class="md-inner"><div class="md-gap"></div><div class="md-left"><div class="md-half-circle"></div></div><div
+                            class="md-right"><div class="md-half-circle"></div></div></div></div></md-progress-circular></div><h3
+            class="md-headline">Loading</h3></div><div layout="column" ui-view="main" flex></div><div id="fb-root"></div><script
+        src="scripts/vendor-69c5230414.js"></script><script>Parse.initialize('<%= appId %>');Parse.serverURL = '<%= serverUrl %>';</script><script src="scripts/app-bbdad84b1f.js"></script><script src="scripts/app-fbe29087e3.js"></script></body></html>
