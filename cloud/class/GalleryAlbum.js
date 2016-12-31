@@ -49,6 +49,7 @@ function parseGalleryAlbum(item) {
             privacity    : item.get('privacity'),
             user         : {},
             createdAt    : item.createdAt,
+            birthdate    : item.get('birthdate')
         }
     }
 
@@ -150,6 +151,7 @@ function parseAlbum(item) {
         description: item.get('description'),
         qtyPhotos  : item.get('qtyPhotos') || 0,
         createdAt  : item.createdAt,
+        birthdate  : item.get('birthdate'),
         user       : {
             id      : item.get('user').id,
             name    : item.get('user').get('name'),
