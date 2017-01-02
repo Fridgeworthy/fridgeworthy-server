@@ -222,107 +222,107 @@ function getLikers(req, res) {
 
         }, error => res.error);
 }
-function getFollowers(req, res) {
-    const params = req.params;
-
-
-    if (params.username) {
-        new Parse.Query(ParseObject)
-            .equalTo('username', params.username)
-            .first(MasterKey)
-            .then(user => {
-                new Parse.Query(UserFollow)
-                    .equalTo('to', user)
-                    .include('user')
-                    .find(MasterKey)
-                    .then(data => {
-
-                        let _result = [];
-
-                        if (!data.length) {
-                            res.success(_result);
-                        }
-
-                        let cb = _.after(data.length, () => {
-                            res.success(_result);
-                        });
-
-                        _.each(data, user => {
-
-                            // User Data
-                            new Parse.Query('UserData')
-                                .equalTo('user', user.attributes.from)
-                                .first(MasterKey)
-                                .then(userData => {
-
-                                    new Parse.Query('Gallery')
-                                        .equalTo('user', user.attributes.from)
-                                        .limit(3)
-                                        .descending('createdAt')
-                                        .find()
-                                        .then(galleries => {
-
-                                            let profile       = parseProfile(userData)
-                                            profile.isFollow  = isFollow ? true : false;
-                                            profile.galleries = galleries.map(item => Gallery.parseGallery(item))
-                                            console.log('profile', profile);
-                                            _result.push(profile);
-                                            cb();
-                                        });
-
-                                }, res.error);
-                        });
-
-                    }, res.error);
-
-            })
-    } else {
-        new Parse.Query(UserFollow)
-            .equalTo('to', req.user)
-            .include('user')
-            .find(MasterKey)
-            .then(data => {
-
-                let _result = [];
-
-                if (!data.length) {
-                    res.success(_result);
-                }
-
-                let cb = _.after(data.length, () => {
-                    res.success(_result);
-                });
-
-                _.each(data, user => {
-
-                    // User Data
-                    new Parse.Query('UserData')
-                        .equalTo('user', user.attributes.to)
-                        .first(MasterKey)
-                        .then(userData => {
-
-                            new Parse.Query('Gallery')
-                                .equalTo('user', user.attributes.to)
-                                .limit(3)
-                                .descending('createdAt')
-                                .find()
-                                .then(galleries => {
-
-                                    let profile       = parseProfile(userData)
-                                    profile.isFollow  = isFollow ? true : false;
-                                    profile.galleries = galleries.map(item => Gallery.parseGallery(item))
-                                    console.log('profile', profile);
-                                    _result.push(profile);
-                                    cb();
-                                });
-
-                        }, res.error);
-                });
-
-            }, res.error);
-
-    }
-}
+//function getFollowers(req, res) {
+//    const params = req.params;
+//
+//
+//    if (params.username) {
+//        new Parse.Query(ParseObject)
+//            .equalTo('username', params.username)
+//            .first(MasterKey)
+//            .then(user => {
+//                new Parse.Query(UserFollow)
+//                    .equalTo('to', user)
+//                    .include('user')
+//                    .find(MasterKey)
+//                    .then(data => {
+//
+//                        let _result = [];
+//
+//                        if (!data.length) {
+//                            res.success(_result);
+//                        }
+//
+//                        let cb = _.after(data.length, () => {
+//                            res.success(_result);
+//                        });
+//
+//                        _.each(data, user => {
+//
+//                            // User Data
+//                            new Parse.Query('UserData')
+//                                .equalTo('user', user.attributes.from)
+//                                .first(MasterKey)
+//                                .then(userData => {
+//
+//                                    new Parse.Query('Gallery')
+//                                        .equalTo('user', user.attributes.from)
+//                                        .limit(3)
+//                                        .descending('createdAt')
+//                                        .find()
+//                                        .then(galleries => {
+//
+//                                            let profile       = parseProfile(userData)
+//                                            profile.isFollow  = isFollow ? true : false;
+//                                            profile.galleries = galleries.map(item => Gallery.parseGallery(item))
+//                                            console.log('profile', profile);
+//                                            _result.push(profile);
+//                                            cb();
+//                                        });
+//
+//                                }, res.error);
+//                        });
+//
+//                    }, res.error);
+//
+//            })
+//    } else {
+//        new Parse.Query(UserFollow)
+//            .equalTo('to', req.user)
+//            .include('user')
+//            .find(MasterKey)
+//            .then(data => {
+//
+//                let _result = [];
+//
+//                if (!data.length) {
+//                    res.success(_result);
+//                }
+//
+//                let cb = _.after(data.length, () => {
+//                    res.success(_result);
+//                });
+//
+//                _.each(data, user => {
+//
+//                    // User Data
+//                    new Parse.Query('UserData')
+//                        .equalTo('user', user.attributes.to)
+//                        .first(MasterKey)
+//                        .then(userData => {
+//
+//                            new Parse.Query('Gallery')
+//                                .equalTo('user', user.attributes.to)
+//                                .limit(3)
+//                                .descending('createdAt')
+//                                .find()
+//                                .then(galleries => {
+//
+//                                    let profile       = parseProfile(userData)
+//                                    profile.isFollow  = isFollow ? true : false;
+//                                    profile.galleries = galleries.map(item => Gallery.parseGallery(item))
+//                                    console.log('profile', profile);
+//                                    _result.push(profile);
+//                                    cb();
+//                                });
+//
+//                        }, res.error);
+//                });
+//
+//            }, res.error);
+//
+//    }
+//}
 
 
 function getFollowing(req, res) {
@@ -347,6 +347,43 @@ function getFollowing(req, res) {
                         // User Data
                         new Parse.Query(UserData)
                             .equalTo('user', userFollow.get('to'))
+                            .first(MasterKey)
+                            .then(userData => {
+                                if (userData) {
+                                    let profile = parseProfile(userData)
+                                    _result.push(profile);
+                                    cb();
+                                }
+                            }).catch(res.error);
+                    });
+
+                }).catch(res.error);
+
+        })
+}
+
+function getFollowers(req, res) {
+    const params = req.params;
+
+    findUsername(params.username)
+        .then(user => {
+            new Parse.Query(UserFollow)
+                .equalTo('to', user)
+                .include(['user'])
+                .find(MasterKey)
+                .then(userFollows => {
+
+                    let _result = [];
+
+                    if (!userFollows.length) res.success(_result);
+
+                    let cb = _.after(userFollows.length, () => res.success(_result));
+
+                    _.each(userFollows, userFollow => {
+
+                        // User Data
+                        new Parse.Query(UserData)
+                            .equalTo('user', userFollow.get('from'))
                             .first(MasterKey)
                             .then(userData => {
                                 if (userData) {
